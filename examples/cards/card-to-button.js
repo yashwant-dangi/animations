@@ -1,14 +1,14 @@
-import React from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Animated, {
   useAnimatedStyle,
   withRepeat,
   interpolate,
   Extrapolate,
   withTiming,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 
-const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 // console.log(HEIGHT);
 const CARD_HEIGHT = 120;
 const CARD_WIDTH = 300;
@@ -17,41 +17,41 @@ const BUTTON_WIDTH = 60;
 const BUTTON_SPACING = 20;
 const VERTICAL_SPACING = 5;
 
-const fixTwo = num => {
-  'worklet';
+const fixTwo = (num) => {
+  "worklet";
   return num.toFixed(2);
 };
 
-export const Card = ({title, text, translateY, index}) => {
+export const Card = ({ title, text, translateY, index }) => {
   const rStyle = useAnimatedStyle(() => {
     const absY = fixTwo(translateY.value % CARD_HEIGHT);
-
-    const height = interpolate(
-      translateY.value,
-      [-1, 0, CARD_HEIGHT * index, CARD_HEIGHT * (index + 1)],
-      [CARD_HEIGHT, CARD_HEIGHT, CARD_HEIGHT, 60],
-      Extrapolate.CLAMP,
-    );
-
-    const active_height = interpolate(
-      absY,
-      [-1, 0, CARD_HEIGHT],
-      [CARD_HEIGHT, CARD_HEIGHT, 60],
-      Extrapolate.CLAMP,
-    );
 
     const width = interpolate(
       translateY.value,
       [-1, 0, CARD_HEIGHT * index, CARD_HEIGHT * (index + 1)],
       [CARD_WIDTH, CARD_WIDTH, CARD_WIDTH, 60],
-      Extrapolate.CLAMP,
+      Extrapolate.CLAMP
     );
 
     const translatex = interpolate(
       translateY.value,
       [-1, 0, CARD_HEIGHT * index, CARD_HEIGHT * (index + 1)],
       [0, 0, 0, index * (BUTTON_WIDTH + BUTTON_SPACING)],
-      Extrapolate.CLAMP,
+      Extrapolate.CLAMP
+    );
+
+    const height = interpolate(
+      translateY.value,
+      [-1, 0, CARD_HEIGHT * index, CARD_HEIGHT * (index + 1)],
+      [CARD_HEIGHT, CARD_HEIGHT, CARD_HEIGHT, 60],
+      Extrapolate.CLAMP
+    );
+
+    const active_height = interpolate(
+      absY,
+      [-1, 0, CARD_HEIGHT],
+      [CARD_HEIGHT, CARD_HEIGHT, 60],
+      Extrapolate.CLAMP
     );
 
     const translatey = interpolate(
@@ -70,27 +70,44 @@ export const Card = ({title, text, translateY, index}) => {
         translateY.value,
         translateY.value - 60 * index,
       ],
-      Extrapolate.CLAMP,
+      Extrapolate.CLAMP
     );
 
-    if (index < 6) {
+    const diff =interpolate(
+      absY,
+      [
+        0,
+        CARD_HEIGHT * index,
+        CARD_HEIGHT * (index + 1 / 2),
+        CARD_HEIGHT * (index + 1),
+      ],
+      [
+        0,
+        translateY.value,
+        translateY.value,
+        translateY.value - 60 * index,
+      ],
+      Extrapolate.CLAMP
+    );
+
+    if (index < 3) {
+      console.log(`idx:${index}=> Y: ${fixTwo(translateY.value)}, y: ${fixTwo(translatey)}, absY: ${absY}, height: ${fixTwo(height)}, active_height: ${fixTwo(active_height)}  `);
       // console.log({absY});
-      console.log('-->', index, {
-        translateY: fixTwo(translateY.value),
-        translatey: fixTwo(translatey),
-        height: fixTwo(height),
-        translateX: fixTwo(translatex),
-        absY,
-        active_height: fixTwo(active_height),
-        // width: fixTwo(width),
-      });
+      // console.log("-->", index, {
+      //   Y: fixTwo(translateY.value),
+      //   ['y']: fixTwo(translatey),
+      //   height: fixTwo(height),
+      //   absY,
+      //   active_height: fixTwo(active_height),
+      //   // translateX: fixTwo(translatex),
+      //   // width: fixTwo(width),
+      // });
     }
 
     return {
       transform: [
-        // {scale},
-        {translateY: translatey},
-        {translateX: translatex},
+        { translateY: translatey },
+        { translateX: translatex },
       ],
       height,
       width,
@@ -102,8 +119,9 @@ export const Card = ({title, text, translateY, index}) => {
       translateY.value,
       [-1, 0, CARD_HEIGHT * (index + 1), CARD_HEIGHT * (index + 2)],
       [1, 1, 0, 0],
-      Extrapolate.CLAMP,
+      Extrapolate.CLAMP
     );
+
     return {
       opacity,
     };
@@ -113,16 +131,17 @@ export const Card = ({title, text, translateY, index}) => {
     <Animated.View
       style={[
         {
-          alignItems: 'center',
-          backgroundColor: 'transparent',
+          alignItems: "center",
+          backgroundColor: "transparent",
           height: CARD_HEIGHT,
           borderRadius: 20,
           borderWidth: 1,
-          borderColor: 'red',
+          borderColor: "red",
           marginHorizontal: 10 * SPACING,
         },
         rStyle,
-      ]}>
+      ]}
+    >
       <View>
         <View style={styles.text}>
           <Text>{title}</Text>
@@ -140,6 +159,6 @@ export const Card = ({title, text, translateY, index}) => {
 const styles = StyleSheet.create({
   text: {
     marginVertical: 30,
-    backgroundColor: 'red',
+    backgroundColor: "red",
   },
 });
