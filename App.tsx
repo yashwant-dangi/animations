@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -31,8 +31,8 @@ import Intro from './animations/00-introduction-to-reanimated';
 // import {PinchAnimation} from './animations/04-pinch-gesture-handler-basics';
 // import {CircularProgressBar} from './animations/05-circular-progress-bar';
 // import {SwipeToDelete} from './animations/06-swipe-to-delete';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {AnimatedCards} from './examples/cards/animated-cards';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { AnimatedCards } from './examples/cards2/animated-cards';
 // import Wallet from './examples/wallet/wallet';
 
 function App() {
@@ -43,7 +43,7 @@ function App() {
   // };
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {/* <Intro /> */}
       {/* <PanBasic /> */}
       {/* <InterPolate/> */}
